@@ -23,6 +23,50 @@ async def on_ready():
     print(f"✅ 로그인 완료: {bot.user.name}")
 
 
+@bot.command(name="도와줘")
+async def show_help(ctx):
+    embed = discord.Embed(
+        title="📌 사용 가능한 명령어 안내", color=discord.Color.green()
+    )
+
+    embed.add_field(
+        name="🎵 뮤직봇",
+        value="`m!set default vol 5` : 사운드 초기 설정\n"
+        "`m!play [링크 or 제목]` : 음악 시작\n"
+        "`m!stop` : 음악 정지",
+        inline=False,
+    )
+
+    embed.add_field(
+        name="📅 일정 알림",
+        value="`/자기소개`, `/일정추가`, `/내일정`, `/생일확인`",
+        inline=False,
+    )
+
+    embed.add_field(
+        name="📚 짭품타",
+        value="`/공부시작`, `/공부종료`, `/랭킹`",
+        inline=False,
+    )
+
+    embed.add_field(
+        name="🧹 청소봇",
+        value="`/청소`",
+        inline=False,
+    )
+
+    embed.add_field(
+        name="🌤️ 날씨봇 ",
+        value="`/날씨 [지역]`, `/추천`",
+        inline=False,
+    )
+    embed.add_field(
+        name="📄 지식봇 ",
+        value="`/질문`, `/요약`",
+        inline=False,
+    )
+
+
 @bot.command(name="청소")
 @commands.has_permissions(manage_messages=True)
 async def delete_all_but_top(ctx):
