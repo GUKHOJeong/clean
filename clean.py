@@ -91,6 +91,7 @@ async def delete_all_but_top(ctx):
         f"{ctx_msg}",
         delete_after=3,
     )
+    await ctx.send(embed=embed)
 
 
 # 봇 실행
