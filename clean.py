@@ -13,7 +13,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 client = discord.Client(intents=intents)
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="/", intents=intents)
 
 
 @bot.event
@@ -21,7 +21,7 @@ async def on_ready():
     print(f"✅ 로그인 완료: {bot.user.name}")
 
 
-@bot.command(name="전부삭제")
+@bot.command(name="청소")
 @commands.has_permissions(manage_messages=True)
 async def delete_all_but_top(ctx):
     messages = [msg async for msg in ctx.channel.history(limit=None)]
@@ -30,13 +30,17 @@ async def delete_all_but_top(ctx):
         await ctx.send("🟡 삭제할 메시지가 없습니다.", delete_after=3)
         return
 
-    to_delete = messages[:-1]  # 상단 1개만 남기고
+    to_delete = [
+        msg
+        for msg in messages[:-1]
+        if not msg.mentions  # ⬅️ 멘션이 포함된 메시지는 제외
+    ]  # 상단 1개만 남기고
 
     for i in range(0, len(to_delete), 100):
         await ctx.channel.delete_messages(to_delete[i : i + 100])
 
     await ctx.send(
-        f"🧹 이 채널에서 상단 1개를 제외하고 {len(to_delete)}개 메시지를 삭제했습니다.",
+        f"🧹 이 채널에서 @과 상단1개를  제외하고 {len(to_delete)}개 메시지를 삭제했습니다.",
         delete_after=3,
     )
 
